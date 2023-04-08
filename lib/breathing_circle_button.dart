@@ -39,6 +39,10 @@ class _BreathingCircleButtonState extends State<BreathingCircleButton>
     return  GestureDetector(
       onTap: widget.onTap,
       child: CustomPaint(
+        size: Size(
+          widget.radius ,
+          widget.radius ,
+        ),
         painter: CircleButtonPainter(_ctrl,
           radius: widget.radius,
         ),
