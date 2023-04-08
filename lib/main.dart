@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: BreathingCircleButton(
-                size: const Size(200, 200),
+                radius: 100,
                 onTap: _incrementCounter,
               ),
             )

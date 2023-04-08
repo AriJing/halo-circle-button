@@ -4,9 +4,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class BreathingCircleButton extends StatefulWidget {
-  const BreathingCircleButton({Key? key,required this.onTap,required this.size}) : super(key: key);
+  const BreathingCircleButton({Key? key,required this.onTap,required this.radius}) : super(key: key);
   final VoidCallback onTap;
-  final Size size;
+  final double radius;
 
   @override
   State<BreathingCircleButton> createState() => _BreathingCircleButtonState();
@@ -39,8 +39,9 @@ class _BreathingCircleButtonState extends State<BreathingCircleButton>
     return  GestureDetector(
       onTap: widget.onTap,
       child: CustomPaint(
-        size: widget.size,
-        painter: CircleButtonPainter(_ctrl),
+        painter: CircleButtonPainter(_ctrl,
+          radius: widget.radius,
+        ),
       ),
     );
   }
@@ -48,8 +49,9 @@ class _BreathingCircleButtonState extends State<BreathingCircleButton>
 
 class CircleButtonPainter extends CustomPainter {
   Animation<double> animation;
+  final double  radius;
 
-  CircleButtonPainter(this.animation) : super(repaint: animation);
+  CircleButtonPainter(this.animation,{required this.radius }) : super(repaint: animation);
 
   final Animatable<double> rotateTween = Tween<double>(begin: 0, end: 2 * pi)
       .chain(CurveTween(curve: Curves.easeIn));
@@ -79,10 +81,10 @@ class CircleButtonPainter extends CustomPainter {
 
     // 绘制两个圆形路径并取其差集
     Path circlePath = Path()
-      ..addOval(Rect.fromCenter(center: const Offset(0, 0), width: 100, height: 100));
+      ..addOval(Rect.fromCenter(center: const Offset(0, 0), width: radius, height: radius));
     Path circlePath2 = Path()
       ..addOval(
-          Rect.fromCenter(center: const Offset(-1, 0), width: 100, height: 100));
+          Rect.fromCenter(center: const Offset(-1, 0), width: radius, height: radius));
     Path result =
         Path.combine(PathOperation.difference, circlePath, circlePath2);
 
